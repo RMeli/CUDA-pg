@@ -16,8 +16,8 @@ int main(){
 
     double x{1.3}, y{1.6}, a{2.4};
 
-    double* x_host = malloc_host<double>(n, x);
-    double* y_host = malloc_host<double>(n, y);
+    double* x_host = malloc_host(n, x);
+    double* y_host = malloc_host(n, y);
 
     duration time;
 
@@ -31,6 +31,9 @@ int main(){
     for(std::size_t i{0}; i < n; i++){
         assert(nearly_equal(y_host[i], y + a * x));
     }
+
+    free_host(x_host);
+    free_host(y_host);
 
     return 0;
 }

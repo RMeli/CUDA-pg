@@ -11,6 +11,12 @@ T* malloc_host(std::size_t n, T value=T()){
 }
 
 template <typename T>
+void free_host(T* ptr){
+    delete[] ptr;
+    ptr = nullptr;
+}
+
+template <typename T>
 T* malloc_device(std::size_t n){
     void* ptr{nullptr}; // Declare void pointer
     auto status = cudaMalloc(&ptr, n * sizeof(T)); // Try memory allocation
