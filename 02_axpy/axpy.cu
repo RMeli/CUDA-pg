@@ -7,10 +7,12 @@ void axpy_cpu(double* y, double* x, double a, std::size_t n){
 }
 
 __global__
-void axpy_kernel(double* y, double* x, double a){
-    auto i = threadIdx.x;
+void axpy_kernel(double* y, double* x, double a, std::size_t n){
+    auto i = blockIdx.x;
 
-    y[i] = y[i] + a * x[i];
+    if(i < n){
+        y[i] = y[i] + a * x[i];
+    }
 }
 
 }
