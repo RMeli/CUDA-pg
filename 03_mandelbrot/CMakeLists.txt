@@ -11,4 +11,7 @@ find_package(CUDA 9.0 REQUIRED)
 
 include_directories(../utils)
 
-add_executable(mandelbrot main.cpp)
+add_executable(
+    mandelbrot main.cpp
+        mandelbrot.cpp
+)

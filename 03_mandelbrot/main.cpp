@@ -1,28 +1,21 @@
 #include <fstream>
 #include <iostream>
 
+#include "mandelbrot.h"
 
 #include "ppm.h"
 
 int main(){
 
-    std::ifstream in("../test.ppm", std::ios::binary);
+    std::size_t width{1000}, height{800};
 
-    if(!in.is_open()){
-        std::cout << "FAILED OPENING test.ppm" << std::endl;
-        exit(-1);
-    }
+    std::ofstream out("mandelbrot.ppm", std::ios::binary);
 
-    // Load image
-    char* image{nullptr};
-    int width{0}, height{0};
-    std::tie(image, width, height) = utils::read_ppm(in);
-
-    std::ofstream out("../out.ppm", std::ios::binary);
-
-    utils::write_ppm(image, width, height, out);
+    char* image = new char[width * height * 3];
+    mandelbrot_serial(image, width, height);
 
     if(image != nullptr){
+        utils::write_ppm(image, width, height, out);
         delete[] image;
     }
 
