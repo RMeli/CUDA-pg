@@ -6,50 +6,49 @@
 
 using duration = std::chrono::milliseconds;
 
-class Timer{
-  public:
+class Timer {
+public:
+  /**
+   * @brief Start timer
+   *
+   */
+  void start() {
+    ticking = true;
 
-    /**
-     * @brief Start timer
-     * 
-     */
-    void start(){
-        ticking = true;
+    // Get current time
+    ti = std::chrono::high_resolution_clock::now();
+  }
 
-        // Get current time
-        ti = std::chrono::high_resolution_clock::now();
+  /**
+   * @brief Stop timer and compute time interval from start
+   *
+   * @return double Elapsed time from start (in milliseconds)
+   */
+  double stop() {
+    // Get current time
+    tf = std::chrono::high_resolution_clock::now();
+
+    // Check if clock was started
+    if (!ticking) {
+      throw std::runtime_error("Timer not started.");
     }
 
-    /**
-     * @brief Stop timer and compute time interval from start
-     * 
-     * @return double Elapsed time from start (in milliseconds)
-     */
-    double stop(){
-        // Get current time
-        tf = std::chrono::high_resolution_clock::now();
+    ticking = false;
 
-        // Check if clock was started
-        if(!ticking){
-            throw std::runtime_error("Timer not started.");
-        }
+    // Compute elapsed time between start and stop (in milliseconds)
+    auto time_ms = std::chrono::duration_cast<duration>(tf - ti);
 
-        ticking = false;
+    return time_ms.count();
+  }
 
-        // Compute elapsed time between start and stop (in milliseconds)
-        auto time_ms = std::chrono::duration_cast<duration>(tf - ti);
+private:
+  /**
+   * @brief Initial and final time points
+   *
+   */
+  std::chrono::time_point<std::chrono::high_resolution_clock> ti, tf;
 
-        return time_ms.count();
-    }
-
-  private:
-    /**
-     * @brief Initial and final time points
-     * 
-     */
-    std::chrono::time_point<std::chrono::high_resolution_clock> ti, tf;
-
-    bool ticking;
+  bool ticking;
 };
 
 #endif // TIMING_H
