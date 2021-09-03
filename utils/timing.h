@@ -6,14 +6,13 @@
 
 using duration = std::chrono::milliseconds;
 
-class Timer{
+class Timer {
   public:
-
     /**
      * @brief Start timer
-     * 
+     *
      */
-    void start(){
+    void start() {
         ticking = true;
 
         // Get current time
@@ -22,15 +21,15 @@ class Timer{
 
     /**
      * @brief Stop timer and compute time interval from start
-     * 
+     *
      * @return double Elapsed time from start (in milliseconds)
      */
-    double stop(){
+    double stop() {
         // Get current time
         tf = std::chrono::high_resolution_clock::now();
 
         // Check if clock was started
-        if(!ticking){
+        if (!ticking) {
             throw std::runtime_error("Timer not started.");
         }
 
@@ -45,7 +44,7 @@ class Timer{
   private:
     /**
      * @brief Initial and final time points
-     * 
+     *
      */
     std::chrono::time_point<std::chrono::high_resolution_clock> ti, tf;
 

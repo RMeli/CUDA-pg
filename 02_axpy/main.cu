@@ -1,6 +1,6 @@
-#include <iostream>
-#include <chrono>
 #include <cassert>
+#include <chrono>
+#include <iostream>
 
 #include "mem.h"
 #include "num.h"
@@ -10,7 +10,7 @@
 
 using namespace std;
 
-int main(){
+int main() {
     constexpr std::size_t n{1024};
 
     constexpr std::size_t reps{10000};
@@ -20,11 +20,11 @@ int main(){
     Timer t;
     double time{0.0};
 
-    double* x_host{nullptr};
-    double* y_host{nullptr};
+    double *x_host{nullptr};
+    double *y_host{nullptr};
 
     cout << "axpy (cpu)... ";
-    for(std::size_t i{0}; i < reps; i++){
+    for (std::size_t i{0}; i < reps; i++) {
         x_host = malloc_host(n, x);
         y_host = malloc_host(n, y);
 
@@ -32,7 +32,7 @@ int main(){
         axpy::axpy_cpu(y_host, x_host, a, n);
         time += t.stop();
 
-        for(std::size_t i{0}; i < n; i++){
+        for (std::size_t i{0}; i < n; i++) {
             assert(nearly_equal(y_host[i], y + a * x));
         }
 
@@ -41,12 +41,12 @@ int main(){
     }
     cout << time << " ms" << endl;
 
-    double* x_device{nullptr};
-    double* y_device{nullptr};
+    double *x_device{nullptr};
+    double *y_device{nullptr};
 
     time = 0.0; // Reset time
     cout << "axpy (gpu)... ";
-    for(std::size_t i{0}; i < reps; i++){
+    for (std::size_t i{0}; i < reps; i++) {
         x_host = malloc_host(n, x);
         y_host = malloc_host(n, y);
 
@@ -55,11 +55,11 @@ int main(){
         y_device = malloc_device<double>(n);
         copy_host_to_device(x_host, x_device, n);
         copy_host_to_device(y_host, y_device, n);
-        axpy::axpy_kernel<<<n,1>>>(y_device, x_device, a, n);
+        axpy::axpy_kernel<<<n, 1>>>(y_device, x_device, a, n);
         copy_device_to_host(y_device, y_host, n);
         time += t.stop();
 
-        for(std::size_t i{0}; i < n; i++){
+        for (std::size_t i{0}; i < n; i++) {
             assert(nearly_equal(y_host[i], y + a * x));
         }
 

@@ -2,15 +2,15 @@
 
 using namespace std;
 
-int main(){
-    
+int main() {
+
     int nGPUs;
     cudaGetDeviceCount(&nGPUs);
 
-    for(int i{0}; i < nGPUs; i++){
+    for (int i{0}; i < nGPUs; i++) {
         cudaDeviceProp prop;
         cudaGetDeviceProperties(&prop, i);
-    
+
         cout << "Device #" << i << endl;
         cout << "   Name: " << prop.name << endl;
         cout << "   Global Memory (GN): " << prop.totalGlobalMem / 1e9 << endl;
@@ -19,4 +19,3 @@ int main(){
 
     return 0;
 }
-
