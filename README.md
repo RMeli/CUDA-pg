@@ -18,3 +18,8 @@ Run [Singularity](https://singularity.hpcng.org/) container with CUDA and [CMake
 ```bash
 singularity shell --nv singularity/
 ```
+
+## References
+
+* [CSCS HPC Summer School 2018](https://github.com/eth-cscs/SummerSchool2018)
+* [CUDA by Example - An Introduction to General Purpose GPU Programming](https://developer.nvidia.com/cuda-example)
