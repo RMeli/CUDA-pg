@@ -1,0 +1,16 @@
+Bootstrap: docker
+From: nvidia/cuda:10.2-cudnn7-devel-ubuntu18.04
+
+%post
+    apt update -y
+    apt upgrade -y
+
+    ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
+
+    apt install -y wget gnupg software-properties-common tzdata git \
+        apt-transport-https ca-certificates
+
+    wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null
+    apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
+    apt update
+    apt install -y cmake build-essential

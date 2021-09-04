@@ -1,5 +1,8 @@
 build/
 
+# containers
+*.sif
+
 # editors
 .idea
 .vscode
