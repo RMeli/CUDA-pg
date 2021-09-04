@@ -21,16 +21,16 @@ The `__device__` qualifier indicates to the CUDA compiler that the function only
 
 ### Grid of Blocks
 
-It is possible to define a two-dimensional grid of blocks to lunch the kernel. The grid is defined as
+It is possible to define a two-dimensional grid of blocks to launch the kernel. The grid is defined as
 
 ```cpp
 dim3 grid(DIM_X, DIM_Y);
 ```
 
-where `dim3` represent a three dimensional tuple (last dimension set to `1`) and the kernel is lunched with
+where `dim3` represent a three dimensional tuple (last dimension set to `1`) and the kernel is launched with
 
 ```cpp
 kernel<<<grid,1>>>();
 ```
 
-Blocks are indexed by `blockIdx.x` and `blockIdx.y`, while `gridDim.x` and `gridDim.y` store the dimensin of the grid of blocks that was lunched.
+Blocks are indexed by `blockIdx.x` and `blockIdx.y`, while `gridDim.x` and `gridDim.y` store the dimensin of the grid of blocks that was launched.

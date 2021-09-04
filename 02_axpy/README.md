@@ -23,7 +23,7 @@ A kernel (`__global__`) function can be called from the host but runs on the dev
 
 ### Kernel Call
 
-A kernel function is called with parameters within `<<< >>>`. Such parameters are passed to the runtime system (not the kernel function) and determine how the device code is lunched.
+A kernel function is called with parameters within `<<< >>>`. Such parameters are passed to the runtime system (not the kernel function) and determine how the device code is launched.
 
 ```cpp
 kernel<<<1,1>>>();
