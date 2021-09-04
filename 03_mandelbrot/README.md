@@ -13,8 +13,24 @@ remains bounded for all `n > 0`.
 
 ## CUDA Concepts
 
-### Device Function
+### Device Functions
 
 The `__device__` qualifier indicates to the CUDA compiler that the function only runs on the device and not the host.
 
 `__device__` functions can be called only from other `__device__` functions or from kernel (`__global__`) functions.
+
+### Grid of Blocks
+
+It is possible to define a two-dimensional grid of blocks to lunch the kernel. The grid is defined as
+
+```cpp
+dim3 grid(DIM_X, DIM_Y);
+```
+
+where `dim3` represent a three dimensional tuple (last dimension set to `1`) and the kernel is lunched with
+
+```cpp
+kernel<<<grid,1>>>();
+```
+
+Blocks are indexed by `blockIdx.x` and `blockIdx.y`, while `gridDim.x` and `gridDim.y` store the dimensin of the grid of blocks that was lunched.

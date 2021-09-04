@@ -14,7 +14,7 @@ and store the result of the operation in `y`.
 
 The `__global__` qualifier indicates to the CUDA compiler that the function (kernel) needs to be compiled to run on the device instead of the host.
 
-```cuda
+```cpp
 __global__ void kernel() {
 }
 ```
@@ -25,11 +25,11 @@ A kernel (`__global__`) function can be called from the host but runs on the dev
 
 A kernel function is called with parameters within `<<< >>>`. Such parameters are passed to the runtime system (not the kernel function) and determine how the device code is lunched.
 
-```cuda
+```cpp
 kernel<<<1,1>>>();
 ```
 
-### Block
+### Blocks
 
 The first argument of the kernel call `kernel<<<N,1>>>()` represent the number `N` of parallel blocks that will be created. Blocks represent parallel invocations of the kernel and the block index can be accessed with `blockIdx.x`.
 
