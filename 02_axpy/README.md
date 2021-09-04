@@ -19,6 +19,8 @@ __global__ void kernel() {
 }
 ```
 
+A kernel (`__global__`) function can be called from the host but runs on the device.
+
 ### Kernel Call
 
 A kernel function is called with parameters within `<<< >>>`. Such parameters are passed to the runtime system (not the kernel function) and determine how the device code is lunched.
