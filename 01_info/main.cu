@@ -13,8 +13,11 @@ int main() {
 
         cout << "Device #" << i << endl;
         cout << "   Name: " << prop.name << endl;
-        cout << "   Global Memory (GN): " << prop.totalGlobalMem / 1e9 << endl;
+        cout << "   Integrated: " << prop.integrated << endl;
         cout << "   Clock Rate (MHz): " << prop.clockRate / 1e3 << endl;
+        cout << "   Global Memory (Gb): " << prop.totalGlobalMem / 1e9 << endl;
+        cout << "   Max Threads per Block: " << prop.maxThreadsPerBlock << endl;
+        cout << "   Threads per Warp: " << prop.warpSize << endl;
     }
 
     return 0;
