@@ -12,9 +12,7 @@ using namespace std;
 
 int main() {
     constexpr std::size_t n{1024};
-
     constexpr std::size_t reps{10000};
-
     double x{1.3}, y{1.6}, a{2.4};
 
     Timer t;
