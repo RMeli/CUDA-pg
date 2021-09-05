@@ -8,6 +8,7 @@ Playground for experimentation with CUDA.
 * `02_axpy`: kernel functions, kernel calls, blocks, host/device memory
 * `03_mandelbrot`: device functions, grid of blocks
 * `04_axpy`: threads, blocks and threads
+* `05_dot`: shared memory, thread synchronization
 
 ### Timings
 
