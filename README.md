@@ -4,7 +4,7 @@ Playground for experimentation with CUDA.
 
 ## CUDA Concepts
 
-* `01_info`: [device information](01_info/README.md#CUDA Concepts)
+* `01_info`: [device information](01_info/README.md#CUDA_Concepts)
 * `02_axpy`: kernel functions, kernel calls, blocks, host/device memory
 * `03_mandelbrot`: device functions, grid of blocks
 * `04_axpy`: threads, blocks and threads
