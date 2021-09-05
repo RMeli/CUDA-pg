@@ -21,8 +21,8 @@ int main() {
     double timefreeh{0.0}, timefreed{0.0};
     double timecopyhd{0.0}, timecopydh{0.0};
 
-    double *x_host{nullptr};
-    double *y_host{nullptr};
+    double* x_host{nullptr};
+    double* y_host{nullptr};
 
     cout << "axpy (cpu)..." << endl;
     for (std::size_t i{0}; i < reps; i++) {
@@ -48,8 +48,8 @@ int main() {
     cout << "  axpy: " << time << " ms" << endl;
     cout << "  free: " << timefreeh << " ms" << endl;
 
-    double *x_device{nullptr};
-    double *y_device{nullptr};
+    double* x_device{nullptr};
+    double* y_device{nullptr};
 
     // Reset times
     time = 0.0;

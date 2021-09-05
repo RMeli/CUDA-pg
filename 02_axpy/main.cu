@@ -18,8 +18,8 @@ int main() {
     Timer t;
     double time{0.0};
 
-    double *x_host{nullptr};
-    double *y_host{nullptr};
+    double* x_host{nullptr};
+    double* y_host{nullptr};
 
     cout << "axpy (cpu)... ";
     for (std::size_t i{0}; i < reps; i++) {
@@ -39,8 +39,8 @@ int main() {
     }
     cout << time << " ms" << endl;
 
-    double *x_device{nullptr};
-    double *y_device{nullptr};
+    double* x_device{nullptr};
+    double* y_device{nullptr};
 
     time = 0.0; // Reset time
     cout << "axpy (gpu)... ";

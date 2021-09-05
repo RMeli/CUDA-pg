@@ -5,7 +5,7 @@
 bool in_mandelbrot(std::size_t x, std::size_t y, std::size_t width,
                    std::size_t height, std::size_t max_iters = 1000);
 
-void mandelbrot(char *image, std::size_t width, std::size_t height,
+void mandelbrot(char* image, std::size_t width, std::size_t height,
                 std::size_t max_iters) {
     for (std::size_t x{0}; x < width; x++) {
         for (std::size_t y{0}; y < height; y++) {
@@ -51,11 +51,11 @@ template <typename T> class cuComplex {
   public:
     __device__ cuComplex(T real_, T imag_) : real(real_), imag(imag_) {}
 
-    __device__ cuComplex<T> operator+(const cuComplex<T> &c) const {
+    __device__ cuComplex<T> operator+(const cuComplex<T>& c) const {
         return cuComplex<T>(real + c.real, imag + c.imag);
     }
 
-    __device__ cuComplex<T> operator*(const cuComplex<T> &c) const {
+    __device__ cuComplex<T> operator*(const cuComplex<T>& c) const {
         return cuComplex<T>(real * c.real - imag * c.imag,
                             imag * c.real + real * c.imag);
     }
@@ -71,7 +71,7 @@ __device__ bool in_mandelbrot_gpu(std::size_t x, std::size_t y,
                                   std::size_t width, std::size_t height,
                                   std::size_t max_iters = 1000);
 
-__global__ void mandelbrot_gpu(char *image, std::size_t width,
+__global__ void mandelbrot_gpu(char* image, std::size_t width,
                                std::size_t height, std::size_t max_iters) {
     std::size_t x = blockIdx.x;
     std::size_t y = blockIdx.y;

@@ -19,7 +19,7 @@ int main() {
     std::ofstream outgpu("mandelbrot_gpu.ppm", std::ios::binary);
 
     // Allocate image on the host
-    char *image = malloc_host<char>(n);
+    char* image = malloc_host<char>(n);
 
     std::cout << "mandelbrot (cpu)... " << std::flush;
     t.start();
@@ -37,7 +37,7 @@ int main() {
 
     std::cout << "mandelbrot (gpu)... " << std::flush;
     t.start();
-    char *image_device = malloc_device<char>(n);
+    char* image_device = malloc_device<char>(n);
     mandelbrot_gpu<<<grid, 1>>>(image_device, width, height);
     copy_device_to_host(image_device, image, n);
     time = t.stop();

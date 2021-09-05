@@ -7,7 +7,7 @@
 
 namespace utils {
 
-std::tuple<char *, int, int> read_ppm(std::istream &in) {
+std::tuple<char*, int, int> read_ppm(std::istream& in) {
     // check format
     std::string magic_number;
     in >> magic_number;
@@ -24,13 +24,13 @@ std::tuple<char *, int, int> read_ppm(std::istream &in) {
 
     // get data
     std::size_t size = width * height * 3;
-    char *image = new char[size];
+    char* image = new char[size];
     in.read(image, size);
 
     return std::make_tuple(image, width, height);
 }
 
-void write_ppm(char *image, int width, int height, std::ostream &out,
+void write_ppm(char* image, int width, int height, std::ostream& out,
                std::string magic_number = "P6") {
     out << magic_number << std::endl;
     out << width << ' ' << height << std::endl;
