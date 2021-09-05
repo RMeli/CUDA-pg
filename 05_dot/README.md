@@ -16,6 +16,8 @@ Shared memory is on GPU and therefore has a very low latency access.
 
 `__syncthreads()` allows to synchronize threads within the same block. This allows to wait for all threads (within a block) to finish their computation before continuing with additional computations.
 
+`__syncthreads()` needs to be executed by _all_ thre threads, otherwise the process will hang forever.
+
 ## Notes
 
 ### Static vs Dynamic Shared Memory Allocation

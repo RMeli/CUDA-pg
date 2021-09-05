@@ -10,13 +10,15 @@
 using namespace std;
 
 int main() {
-    constexpr std::size_t numBlocks{4096};
+    // numBlocks should be rather small
+    // The last part of the reduction operator is performed on the CPU
+    constexpr std::size_t numBlocks{64};
     constexpr std::size_t numThreadsPerBlock{512};
 
     constexpr std::size_t n{33554432};
     constexpr std::size_t reps{10};
 
-    double x{1.0}, y{1.0};
+    double x{1.0}, y{2.0};
 
     Timer t;
     double time{0.0};
@@ -38,7 +40,7 @@ int main() {
         dot::dot_cpu(x_host, y_host, r, n);
         time += t.stop();
 
-        assert(nearly_equal(r, static_cast<double>(n)));
+        assert(nearly_equal(r, static_cast<double>(2 * n)));
 
         t.start();
         free_host(x_host);
@@ -65,7 +67,7 @@ int main() {
         dot::dot_gpu<numBlocks, numThreadsPerBlock>(x_host, y_host, r, n);
         time += t.stop();
 
-        assert(nearly_equal(r, static_cast<double>(n)));
+        assert(nearly_equal(r, static_cast<double>(2 * n)));
 
         t.start();
         free_host(x_host);

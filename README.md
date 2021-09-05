@@ -12,7 +12,7 @@ Playground for experimentation with CUDA.
 
 ### Timings
 
-CPU timings are measured for the kernel execution. GPU timings are measured for device memory allocation, copy of data from host to device, kernel execution, and copy of data from device to host.
+CPU timings are measured for the kernel execution. GPU timings are measured for device memory allocation, copy of data from host to device, kernel execution, and copy of data from device to host (unless such timings are clearly disaggregated).
 
 ## Build Experiments
 
