@@ -4,11 +4,11 @@ Playground for experimentation with CUDA.
 
 ## CUDA Concepts
 
-* `01_info`: [device information](01_info/README.md#CUDA_Concepts)
-* `02_axpy`: [kernel functions](02_axpy/README.md#Kernel_Function), [kernel calls](02_axpy/README.md#Kernel_Call), [blocks](02_axpy/README.md#Blocks), [host/device memory](02_axpy/README.md#Device_Memory)
-* `03_mandelbrot`: [device functions](03_mandelbrot/README.md#Device_Functions), [grid of blocks](03_mandelbrot/README.md#Grid_of_Blocks)
-* `04_axpy`: [threads](04_axpy/README.md#Threads), [blocks and threads](04_axpy/README.md#Blocks_and_Threads)
-* `05_dot`: [shared memory](05_dot/README.md#Shared_Memory), [thread synchronization](05_dot/README.md#Thread_Synchronization)
+* `01_info`: [device information](01_info/README.md#cuda-concepts)
+* `02_axpy`: [kernel functions](02_axpy/README.md#kernel-function), [kernel calls](02_axpy/README.md#kernel-call), [blocks](02_axpy/README.md#blocks), [host/device memory](02_axpy/README.md#device-memory)
+* `03_mandelbrot`: [device functions](03_mandelbrot/README.md#device-functions), [grid of blocks](03_mandelbrot/README.md#grid-of-blocks)
+* `04_axpy`: [threads](04_axpy/README.md#threads), [blocks and threads](04_axpy/README.md#blocks-and-threads)
+* `05_dot`: [shared memory](05_dot/README.md#shared-memory), [thread synchronization](05_dot/README.md#thread-synchronization)
 
 ### Timings
 
