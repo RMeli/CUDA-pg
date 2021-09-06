@@ -77,3 +77,7 @@ void copy_host_to_device_constant(T* host_ptr, T* device_ptr, std::size_t n) {
 ```
 
 as done for `cudaMemcpy()` seem to lead to a `invalid device symbol`. When `cudaMemcpyToSymbol()` is called in `main.cu` (where the `__constant__` variable is defined) the error disappears.
+
+### `cuda-memcheck`
+
+`cuda-memcheck` can be used to locate the source and cause of memory access errors.

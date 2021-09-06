@@ -12,11 +12,11 @@
 using namespace std;
 
 // Allocate memory for array of Sphere on the GPU
-constexpr size_t num_spheres{100};
+constexpr size_t num_spheres{10};
 __constant__ Sphere s_device[num_spheres];
 
 int main() {
-    constexpr size_t width{1024}, height{1024};
+    constexpr size_t width{16}, height{16};
     constexpr size_t n{width * height * 3};
 
     std::default_random_engine e(42);
@@ -61,18 +61,17 @@ int main() {
         free_host(image);
     }
 
-    /*
-
-    dim3 grid(width / 16, height / 16);
-    dim3 threads(16, 16);
+    // Copy Sphere on the host to __constant__ device memory
+    auto status =
+        cudaMemcpyToSymbol(s_device, s_host, num_spheres * sizeof(Sphere), 0,
+                           cudaMemcpyHostToDevice);
+    cuda_check_status(status);
+    free_host(s_host);
 
     image = malloc_host<char>(n);
 
-    // Copy Sphere on the host to __constant__ device memory
-    auto status = cudaMemcpyToSymbol(s_device, s_host, num_spheres *
-    sizeof(Sphere), 0, cudaMemcpyHostToDevice); cuda_check_status(status);
-
-    free_host(s_host);
+    dim3 grid(width / 16, height / 16);
+    dim3 threads(16, 16);
 
     cout << "raytracer (gpu)... " << flush;
     t.start();
@@ -82,7 +81,7 @@ int main() {
                                         num_spheres);
     cout << "DEBUG2" << endl;
     copy_device_to_host(image_device, image, n);
-    cout << "DEBUG8" << endl;
+    cout << "DEBUG3" << endl;
     time = t.stop();
     std::cout << time << " ms" << std::endl << std::flush;
 
@@ -92,7 +91,6 @@ int main() {
         utils::write_ppm(image, width, height, outgpu);
         free_host(image);
     }
-    */
 
     return 0;
 }
