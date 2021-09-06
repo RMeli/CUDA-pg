@@ -1,11 +1,11 @@
 #include <cstddef>
-#include <limits>
 #include <iostream>
+#include <limits>
 
 #include "sphere.h"
 
 void raytracer_cpu(char* image, Sphere* s, std::size_t width,
-                                 std::size_t height, std::size_t num_spheres){
+                   std::size_t height, std::size_t num_spheres) {
     for (std::size_t x{0}; x < width; x++) {
         for (std::size_t y{0}; y < height; y++) {
             std::size_t offset = x + y * width;
