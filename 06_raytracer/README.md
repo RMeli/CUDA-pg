@@ -81,3 +81,7 @@ as done for `cudaMemcpy()` seem to lead to a `invalid device symbol`. When `cuda
 ### `cuda-memcheck`
 
 `cuda-memcheck` can be used to locate the source and cause of memory access errors.
+
+### Line Information
+
+The CUDA compiler (`nvcc`) option `--generate-line-info` allows to generate line information for debugging.
