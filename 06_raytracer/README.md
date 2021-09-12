@@ -8,15 +8,50 @@ Simple ray tracer.
 
 ### Constant Memory
 
-`__constant__`
+`__constant__` memory allows to define a constant chunk of memory (memory that does not change during kernel execution). It is limited to 64KB and allows to reduce memory bandwidth (a single read from `__constant__` memory can be proadcasted to nearby threads and it is cached).
+
+### Warps
+
+A warp is a collection of 32 threads treated together; each thread in a warp execute the same code on different data. A single `__constant__` memory read can be breadcasted to one half-warp (block of 16 threads).
 
 ### `cudaMemcopyToSymbol`
+
+`cudaMemcopyToSymbol()` allows to copy device memory into `__constant__` memory (similarly to `cudaMemcpy()` with `cudaMemcpyHostToDevice`, which allows to copy host memory into global device memory).
 
 ### Host/Device Functions
 
 Some functions can be executed both on the host and on the device without modification. Such functions can be defined with `__host__ __device__`.
 
 ## Notes
+
+### Device Pointer to `__constant__` Memory
+
+The `__constant__` memory symbol can be sude directly within `__global__` or `__device__` functions. However, if you need to pass if to `__global__` functions (for example when `__constant__` memory is defined in `main.cu` but the kernel is defined elsewhere), it is not possible to use the name of the symbol as pointer:
+
+```cpp
+__constant__ T* foo[N];
+
+// Produces runtime error
+kernel<<<1,1>>>(foo);
+```
+
+This leads to runtime errors:
+
+```text
+ERROR: an illegal memory access was encountered
+```
+
+In order to get a device pointer to the `__constant__` memory, `cudaGetSymbolAddress()` is necessary:
+
+```cpp
+__constant__ T* foo[N];
+
+T* bar{nullptr};
+cudaGetSymbolAddress((void**)&bar, foo)
+
+// Does not produce runtime error
+kernel<<<1,1>>>(bar);
+```
 
 ### `constexpr` Functions
 

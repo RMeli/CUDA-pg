@@ -12,11 +12,11 @@
 using namespace std;
 
 // Allocate memory for array of Sphere on the GPU
-constexpr size_t num_spheres{10};
-__constant__ Sphere s_device[num_spheres];
+constexpr size_t num_spheres{25};
+__constant__ Sphere s_constant[num_spheres];
 
 int main() {
-    constexpr size_t width{16}, height{16};
+    constexpr size_t width{1000}, height{1000};
     constexpr size_t n{width * height * 3};
 
     std::default_random_engine e(42);
@@ -61,9 +61,9 @@ int main() {
         free_host(image);
     }
 
-    // Copy Sphere on the host to __constant__ device memory
+    // Copy Sphere on the host to __constant__ memory
     auto status =
-        cudaMemcpyToSymbol(s_device, s_host, num_spheres * sizeof(Sphere), 0,
+        cudaMemcpyToSymbol(s_constant, s_host, num_spheres * sizeof(Sphere), 0,
                            cudaMemcpyHostToDevice);
     cuda_check_status(status);
     free_host(s_host);
@@ -73,20 +73,22 @@ int main() {
     dim3 grid(width / 16, height / 16);
     dim3 threads(16, 16);
 
+    // Get address of symbol (constant memory) on the device
+    // Need to cast to void** in order to avoid 'error: no instance of overloaded
+    // function "cudaGetSymbolAddress" matches the argument list'
+    Sphere* s_device{nullptr};
+    cudaGetSymbolAddress((void**)&s_device, s_constant);
+
     cout << "raytracer (gpu)... " << flush;
     t.start();
     char* image_device = malloc_device<char>(n);
-    cout << "DEBUG1" << endl;
     raytracer_kernel<<<grid, threads>>>(image_device, s_device, width, height,
                                         num_spheres);
-    cout << "DEBUG2" << endl;
     copy_device_to_host(image_device, image, n);
-    cout << "DEBUG3" << endl;
     time = t.stop();
     std::cout << time << " ms" << std::endl << std::flush;
 
     free_device(image_device);
-
     if (image != nullptr) {
         utils::write_ppm(image, width, height, outgpu);
         free_host(image);
