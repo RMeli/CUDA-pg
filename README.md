@@ -9,6 +9,7 @@ Playground for experimentation with CUDA.
 * `03_mandelbrot`: [device functions](03_mandelbrot/README.md#device-functions), [grid of blocks](03_mandelbrot/README.md#grid-of-blocks)
 * `04_axpy`: [threads](04_axpy/README.md#threads), [blocks and threads](04_axpy/README.md#blocks-and-threads)
 * `05_dot`: [shared memory](05_dot/README.md#shared-memory), [thread synchronization](05_dot/README.md#thread-synchronization)
+* `06_raytracer`: [constant memory](06_raytracer#constant-memory), [warps](06_raytracer#warps), [host/device functions](06_raytracer#hostdevice-functions)
 
 ### Timings
 
@@ -28,7 +29,7 @@ make               # compile project
 Run [Singularity](https://singularity.hpcng.org/) container with CUDA and [CMake](https://cmake.org/) interactively:
 
 ```bash
-singularity shell --nv singularity/
+singularity shell --nv singularity/<CONTAINER>.sif
 ```
 
 ## References
