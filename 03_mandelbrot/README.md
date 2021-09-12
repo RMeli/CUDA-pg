@@ -11,6 +11,8 @@ z(n + 1) = z^2(n) + c
 
 remains bounded for all `n > 0`.
 
+![mandelbrot](mandelbrot_gpu.png)
+
 ## CUDA Concepts
 
 ### Device Functions
