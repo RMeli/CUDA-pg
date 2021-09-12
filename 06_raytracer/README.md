@@ -4,6 +4,8 @@
 
 Simple ray tracer.
 
+![raytracer](raytracer_gpu.png)
+
 ## CUDA Concepts
 
 ### Constant Memory
