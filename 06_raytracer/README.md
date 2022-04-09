@@ -24,6 +24,9 @@ A warp is a collection of 32 threads treated together; each thread in a warp exe
 
 Some functions can be executed both on the host and on the device without modification. Such functions can be defined with `__host__ __device__`.
 
+### GPU Timing
+
+GPU runtime can be obrained between events created with `cudaEventCreate()` and recorded with `cudaEventRecord()`. The CPU and GPU need to be synchronized with `cudaEventSynchronize()` in order to compute `cudaEventElapsedTime()`.
 ## Notes
 
 ### Device Pointer to `__constant__` Memory
