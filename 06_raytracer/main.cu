@@ -1,7 +1,7 @@
 #include <fstream>
+#include <iomanip>
 #include <iostream>
 #include <random>
-#include <iomanip>
 
 #include "raytracer.h"
 #include "sphere.h"
@@ -88,7 +88,8 @@ int main() {
                                         num_spheres);
     copy_device_to_host(image_device, image, n);
     ctime = ct.stop();
-    std::cout << std::setprecision(1) << ctime << " ms" << std::endl << std::flush;
+    std::cout << std::setprecision(1) << ctime << " ms" << std::endl
+              << std::flush;
 
     free_device(image_device);
     if (image != nullptr) {
@@ -121,7 +122,8 @@ int main() {
                                         num_spheres);
     copy_device_to_host(image_device, image, n);
     ctime = ct.stop();
-    std::cout << std::setprecision(1) << ctime << " ms" << std::endl << std::flush;
+    std::cout << std::setprecision(1) << ctime << " ms" << std::endl
+              << std::flush;
 
     free_device(image_device);
     if (image != nullptr) {

@@ -56,23 +56,23 @@ class Timer {
 class CUDATimer {
   public:
     CUDATimer() {
-      // Create start event
-      auto status = cudaEventCreate(&ti);
-      cuda_check_status(status);
+        // Create start event
+        auto status = cudaEventCreate(&ti);
+        cuda_check_status(status);
 
-      // Create stop event
-      status = cudaEventCreate(&tf);
-      cuda_check_status(status);
+        // Create stop event
+        status = cudaEventCreate(&tf);
+        cuda_check_status(status);
     }
 
     ~CUDATimer() {
-      // Destroy start event
-      auto status = cudaEventDestroy(ti);
-      cuda_check_status(status);
+        // Destroy start event
+        auto status = cudaEventDestroy(ti);
+        cuda_check_status(status);
 
-      // Destroy stop event
-      status = cudaEventDestroy(tf);
-      cuda_check_status(status);
+        // Destroy stop event
+        status = cudaEventDestroy(tf);
+        cuda_check_status(status);
     }
 
     void start() {
