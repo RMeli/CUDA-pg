@@ -25,10 +25,10 @@ int main() {
     constexpr size_t width{1024}, height{1024};
     constexpr size_t n{width * height * 3};
 
-    std::default_random_engine e(42);
-    std::uniform_real_distribution<double> uniform_rgb(0, 1);
-    std::uniform_real_distribution<double> uniform_xyz(-500, 500);
-    std::uniform_real_distribution<double> uniform_radius(10, 100);
+    default_random_engine e(42);
+    uniform_real_distribution<double> uniform_rgb(0, 1);
+    uniform_real_distribution<double> uniform_xyz(-500, 500);
+    uniform_real_distribution<double> uniform_radius(10, 100);
 
     Timer t;
     double time{0.0};
@@ -40,9 +40,9 @@ int main() {
     dim3 threads(16, 16);
 
     // Output files
-    std::ofstream outcpu("raytracer_cpu.ppm", std::ios::binary);
-    std::ofstream outgpu("raytracer_gpu.ppm", std::ios::binary);
-    std::ofstream outgpuconst("raytracer_gpu_const.ppm", std::ios::binary);
+    ofstream outcpu("raytracer_cpu.ppm", ios::binary);
+    ofstream outgpu("raytracer_gpu.ppm", ios::binary);
+    ofstream outgpuconst("raytracer_gpu_const.ppm", ios::binary);
 
     // The spheres in this array compose to scene to be ray traced
     // Allocate memory on the host
@@ -64,11 +64,11 @@ int main() {
     // Allocate image on the host
     char* image = malloc_host<char>(n);
 
-    std::cout << "raytracer (cpu)... " << std::flush;
+    cout << "raytracer (cpu)... " << flush;
     t.start();
     raytracer_cpu(image, s_host, width, height, num_spheres);
     time = t.stop();
-    std::cout << time << " ms" << std::endl << std::flush;
+    cout << time << " ms" << endl << flush;
 
     if (image != nullptr) {
         utils::write_ppm(image, width, height, outcpu);
@@ -88,8 +88,7 @@ int main() {
                                         num_spheres);
     copy_device_to_host(image_device, image, n);
     ctime = ct.stop();
-    std::cout << std::setprecision(1) << ctime << " ms" << std::endl
-              << std::flush;
+    cout << setprecision(0) << ctime << " ms" << endl << flush;
 
     free_device(image_device);
     if (image != nullptr) {
@@ -122,8 +121,7 @@ int main() {
                                         num_spheres);
     copy_device_to_host(image_device, image, n);
     ctime = ct.stop();
-    std::cout << std::setprecision(1) << ctime << " ms" << std::endl
-              << std::flush;
+    cout << setprecision(0) << ctime << " ms" << endl << flush;
 
     free_device(image_device);
     if (image != nullptr) {

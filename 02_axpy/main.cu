@@ -1,5 +1,6 @@
 #include <cassert>
 #include <chrono>
+#include <iomanip>
 #include <iostream>
 
 #include "mem.h"
@@ -17,6 +18,8 @@ int main() {
 
     Timer t;
     double time{0.0};
+    CUDATimer ct;
+    double ctime{0.0};
 
     double* x_host{nullptr};
     double* y_host{nullptr};
@@ -37,25 +40,24 @@ int main() {
         free_host(x_host);
         free_host(y_host);
     }
-    cout << time << " ms" << endl;
+    cout << fixed << setprecision(0) << time << " ms" << endl;
 
     double* x_device{nullptr};
     double* y_device{nullptr};
 
-    time = 0.0; // Reset time
     cout << "axpy (gpu)... ";
     for (std::size_t i{0}; i < reps; i++) {
         x_host = malloc_host(n, x);
         y_host = malloc_host(n, y);
 
-        t.start();
+        ct.start();
         x_device = malloc_device<double>(n);
         y_device = malloc_device<double>(n);
         copy_host_to_device(x_host, x_device, n);
         copy_host_to_device(y_host, y_device, n);
         axpy::axpy_kernel<<<n, 1>>>(y_device, x_device, a, n);
         copy_device_to_host(y_device, y_host, n);
-        time += t.stop();
+        ctime += ct.stop();
 
         for (std::size_t i{0}; i < n; i++) {
             assert(nearly_equal(y_host[i], y + a * x));
@@ -66,7 +68,7 @@ int main() {
         free_device(x_device);
         free_device(y_device);
     }
-    cout << time << " ms" << endl;
+    cout << fixed << setprecision(0) << ctime << " ms" << endl;
 
     return 0;
 }

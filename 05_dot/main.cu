@@ -1,4 +1,5 @@
 #include <cassert>
+#include <iomanip>
 #include <iostream>
 
 #include "mem.h"
@@ -24,6 +25,9 @@ int main() {
     double time{0.0};
     double timemalloch{0.0};
     double timefreeh{0.0};
+
+    CUDATimer ct;
+    double ctime{0.0};
 
     double* x_host{nullptr};
     double* y_host{nullptr};
@@ -52,7 +56,6 @@ int main() {
     cout << "  free: " << timefreeh << " ms" << endl;
 
     // Reset times
-    time = 0.0;
     timemalloch = 0.0;
     timefreeh = 0.0;
 
@@ -63,9 +66,9 @@ int main() {
         y_host = malloc_host(n, y);
         timemalloch += t.stop();
 
-        t.start();
+        ct.start();
         dot::dot_gpu<numBlocks, numThreadsPerBlock>(x_host, y_host, r, n);
-        time += t.stop();
+        ctime += ct.stop();
 
         assert(nearly_equal(r, static_cast<double>(2 * n)));
 
@@ -75,7 +78,7 @@ int main() {
         timefreeh += t.stop();
     }
     cout << "  malloc (host): " << timemalloch << " ms" << endl;
-    cout << "  dot: " << time << " ms" << endl;
+    cout << fixed << setprecision(0) << "  dot: " << ctime << " ms" << endl;
     cout << "  free (host): " << timefreeh << " ms" << endl;
 
     return 0;

@@ -1,4 +1,5 @@
 #include <fstream>
+#include <iomanip>
 #include <iostream>
 
 #include "mandelbrot.h"
@@ -7,25 +8,29 @@
 #include "ppm.h"
 #include "timing.h"
 
+using namespace std;
+
 int main() {
 
-    std::size_t width{1000}, height{800};
-    std::size_t n{width * height * 3};
+    size_t width{1000}, height{800};
+    size_t n{width * height * 3};
 
     Timer t;
     double time{0.0};
+    CUDATimer ct;
+    double ctime{0.0};
 
-    std::ofstream outcpu("mandelbrot_cpu.ppm", std::ios::binary);
-    std::ofstream outgpu("mandelbrot_gpu.ppm", std::ios::binary);
+    ofstream outcpu("mandelbrot_cpu.ppm", ios::binary);
+    ofstream outgpu("mandelbrot_gpu.ppm", ios::binary);
 
     // Allocate image on the host
     char* image = malloc_host<char>(n);
 
-    std::cout << "mandelbrot (cpu)... " << std::flush;
+    cout << "mandelbrot (cpu)... " << flush;
     t.start();
     mandelbrot(image, width, height);
     time = t.stop();
-    std::cout << time << " ms" << std::endl << std::flush;
+    cout << fixed << setprecision(0) << time << " ms" << endl << flush;
 
     if (image != nullptr) {
         utils::write_ppm(image, width, height, outcpu);
@@ -35,13 +40,13 @@ int main() {
     dim3 grid(width, height);
     image = malloc_host<char>(n);
 
-    std::cout << "mandelbrot (gpu)... " << std::flush;
-    t.start();
+    cout << "mandelbrot (gpu)... " << flush;
+    ct.start();
     char* image_device = malloc_device<char>(n);
     mandelbrot_gpu<<<grid, 1>>>(image_device, width, height);
     copy_device_to_host(image_device, image, n);
-    time = t.stop();
-    std::cout << time << " ms" << std::endl << std::flush;
+    ctime = ct.stop();
+    cout << fixed << setprecision(0) << ctime << " ms" << endl << flush;
 
     if (image != nullptr) {
         utils::write_ppm(image, width, height, outgpu);

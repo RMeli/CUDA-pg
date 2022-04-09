@@ -1,5 +1,6 @@
 #include <cassert>
 #include <chrono>
+#include <iomanip>
 #include <iostream>
 
 #include "mem.h"
@@ -11,8 +12,8 @@
 using namespace std;
 
 int main() {
-    constexpr std::size_t n{33554432};
-    constexpr std::size_t reps{10};
+    constexpr size_t n{33554432};
+    constexpr size_t reps{10};
     double x{1.3}, y{1.6}, a{2.4};
 
     Timer t;
@@ -21,11 +22,14 @@ int main() {
     double timefreeh{0.0}, timefreed{0.0};
     double timecopyhd{0.0}, timecopydh{0.0};
 
+    CUDATimer ct;
+    double ctime{0.0};
+
     double* x_host{nullptr};
     double* y_host{nullptr};
 
     cout << "axpy (cpu)..." << endl;
-    for (std::size_t i{0}; i < reps; i++) {
+    for (size_t i{0}; i < reps; i++) {
         t.start();
         x_host = malloc_host(n, x);
         y_host = malloc_host(n, y);
@@ -35,7 +39,7 @@ int main() {
         axpy::axpy_cpu(y_host, x_host, a, n);
         time += t.stop();
 
-        for (std::size_t i{0}; i < n; i++) {
+        for (size_t i{0}; i < n; i++) {
             assert(nearly_equal(y_host[i], y + a * x));
         }
 
@@ -52,12 +56,14 @@ int main() {
     double* y_device{nullptr};
 
     // Reset times
-    time = 0.0;
     timemalloch = 0.0;
+    timemallocd = 0.0;
+    timecopyhd = 0.0;
+    timecopydh = 0.0;
     timefreeh = 0.0;
 
     cout << "axpy (gpu)..." << endl;
-    for (std::size_t i{0}; i < reps; i++) {
+    for (size_t i{0}; i < reps; i++) {
         t.start();
         x_host = malloc_host(n, x);
         y_host = malloc_host(n, y);
@@ -73,15 +79,15 @@ int main() {
         copy_host_to_device(y_host, y_device, n);
         timecopyhd += t.stop();
 
-        t.start();
+        ct.start();
         axpy::axpy_kernel<<<4096, 1024>>>(y_device, x_device, a, n);
-        time += t.stop();
+        ctime += ct.stop();
 
         t.start();
         copy_device_to_host(y_device, y_host, n);
         timecopydh += t.stop();
 
-        for (std::size_t i{0}; i < n; i++) {
+        for (size_t i{0}; i < n; i++) {
             assert(nearly_equal(y_host[i], y + a * x));
         }
 
@@ -98,7 +104,7 @@ int main() {
     cout << "  malloc (host): " << timemalloch << " ms" << endl;
     cout << "  malloc (device): " << timemallocd << " ms" << endl;
     cout << "  copy (host to device): " << timecopyhd << " ms" << endl;
-    cout << "  axpy: " << time << " ms" << endl;
+    cout << fixed << setprecision(0) << "  axpy: " << ctime << " ms" << endl;
     cout << "  copy (device to host): " << timecopydh << " ms" << endl;
     cout << "  free (host): " << timefreeh << " ms" << endl;
     cout << "  free (device): " << timefreed << " ms" << endl;
