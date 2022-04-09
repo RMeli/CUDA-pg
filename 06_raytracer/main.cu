@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <random>
+#include <iomanip>
 
 #include "raytracer.h"
 #include "sphere.h"
@@ -31,6 +32,8 @@ int main() {
 
     Timer t;
     double time{0.0};
+    CUDATimer ct;
+    double ctime{0.0};
 
     // Kernel launch values
     dim3 grid(width / 16, height / 16);
@@ -79,13 +82,13 @@ int main() {
     image = malloc_host<char>(n);
 
     cout << "raytracer (gpu)... " << flush;
-    t.start();
+    ct.start();
     char* image_device = malloc_device<char>(n);
     raytracer_kernel<<<grid, threads>>>(image_device, s_device, width, height,
                                         num_spheres);
     copy_device_to_host(image_device, image, n);
-    time = t.stop();
-    std::cout << time << " ms" << std::endl << std::flush;
+    ctime = ct.stop();
+    std::cout << std::setprecision(1) << ctime << " ms" << std::endl << std::flush;
 
     free_device(image_device);
     if (image != nullptr) {
@@ -112,13 +115,13 @@ int main() {
     cuda_check_status(cudaGetSymbolAddress((void**)&s_device, s_constant));
 
     cout << "raytracer (gpu | const)... " << flush;
-    t.start();
+    ct.start();
     image_device = malloc_device<char>(n);
     raytracer_kernel<<<grid, threads>>>(image_device, s_device, width, height,
                                         num_spheres);
     copy_device_to_host(image_device, image, n);
-    time = t.stop();
-    std::cout << time << " ms" << std::endl << std::flush;
+    ctime = ct.stop();
+    std::cout << std::setprecision(1) << ctime << " ms" << std::endl << std::flush;
 
     free_device(image_device);
     if (image != nullptr) {
