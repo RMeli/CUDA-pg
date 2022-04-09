@@ -22,6 +22,7 @@ class Timer {
      * @return double Elapsed time from start (in milliseconds)
      */
     double stop();
+
   private:
     /**
      * @brief Initial and final time points
