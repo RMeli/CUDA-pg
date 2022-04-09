@@ -12,4 +12,7 @@ find_package(CUDA 10.0 REQUIRED)
 
 include_directories(../utils)
 
-add_executable(dot main.cu)
+add_executable(dot main.cu
+    ../utils/err.cu
+    ../utils/timing.cu
+)

@@ -12,6 +12,7 @@ find_package(CUDA 10.0 REQUIRED)
 
 include_directories(../utils)
 
-add_executable(raytracer main.cu
-                    raytracer.cu
+add_executable(raytracer main.cu raytracer.cu
+    ../utils/err.cu
+    ../utils/timing.cu
 )

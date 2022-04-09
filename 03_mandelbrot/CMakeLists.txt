@@ -15,4 +15,6 @@ include_directories(../utils)
 add_executable(
     mandelbrot main.cu
         mandelbrot.cu
+        ../utils/err.cu
+        ../utils/timing.cu
 )
