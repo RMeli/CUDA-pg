@@ -1,6 +1,6 @@
 # CUDA Playground
 
-Playground for experimentation with CUDA C++. Most of the code in this repository comes from [CUDA by Example - An Introduction to General Purpose GPU Programming](https://developer.nvidia.com/cuda-example) (see `LICENSES`).
+Playground for experimentation with CUDA C++. Most of the code in this repository is an adaptation of the code associated to [CUDA by Example - An Introduction to General Purpose GPU Programming](https://developer.nvidia.com/cuda-example) (see `LICENSES`).
 
 ## CUDA Concepts
 
