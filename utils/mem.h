@@ -59,6 +59,25 @@ template <typename T> T* malloc_device(std::size_t n) {
 }
 
 /**
+ * @brief Allocate memory on the device and set memory with @param value
+ *
+ * @tparam T
+ * @param n Number of memory blocks to allocate
+ * @param value Initization value for memory blocks
+ * @return T* Pointer to allocated memory
+ */
+template <typename T> T* malloc_memset_device(std::size_t n, T value = T()) {
+    void* device_ptr{nullptr}; // Declare void pointer
+    auto status =
+        cudaMalloc(&device_ptr, n * sizeof(T)); // Try memory allocation
+    cuda_check_status(status);                  // Check allocation
+    status = cudaMemset(device_ptr, value,
+                        n * sizeof(T)); // Try memory initialization
+    cuda_check_status(status);          // Check initialization
+    return (T*)device_ptr;              // Return pointer of type T*
+}
+
+/**
  * @brief Free device memory
  *
  * @tparam T
