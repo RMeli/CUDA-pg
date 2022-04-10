@@ -10,6 +10,7 @@ Playground for experimentation with CUDA.
 * `04_axpy`: [threads](04_axpy/README.md#threads), [blocks and threads](04_axpy/README.md#blocks-and-threads)
 * `05_dot`: [shared memory](05_dot/README.md#shared-memory), [thread synchronization](05_dot/README.md#thread-synchronization)
 * `06_raytracer`: [constant memory](06_raytracer#constant-memory), [warps](06_raytracer#warps), [host/device functions](06_raytracer#hostdevice-functions), [GPU timing and events]((06_raytracer#gpu-timing)
+* `07_hist`: [atomic operations](07_hist#atomic-operations), [set device memory](07_hist#set-device-memory)
 ### Timings
 
 CPU timings are measured for the kernel execution. GPU timings are measured for device memory allocation, copy of data from host to device, kernel execution, and copy of data from device to host (unless such timings are clearly disaggregated).

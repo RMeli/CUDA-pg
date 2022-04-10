@@ -8,7 +8,9 @@ Compute histogram of random 8-bit values.
 
 An _atomic operation_ is an operation that cannot be broken down into smaller parts by other threads.
 
-### `cudaMemset`
+* `atomicAdd()`
+
+### Set Device Memory
 
 `cudaMemset()` can be used to directly initialise the device memory, if there is no data to be copied from the beginning.
 
@@ -24,7 +26,3 @@ template <typename T> T* malloc_memset_device(std::size_t n, T value = T()) {
     return (T*)device_ptr;              // Return pointer of type T*
 }
 ```
-
-### `atomicAdd`
-
-`atomicAdd()` allows to perform atomic additions, ensuring that only one thread modifies the result at a time.
