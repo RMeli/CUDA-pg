@@ -104,6 +104,23 @@ void copy_host_to_device(T* host_ptr, T* device_ptr, std::size_t n) {
 }
 
 /**
+ * @brief Copy host memory to device memory asynchronously
+ *
+ * @tparam T
+ * @param host_ptr Host pointer
+ * @param device_ptr Device pointer
+ * @param n Number of memory blocks to copy
+ * @param stream CUDA stream
+ */
+template <typename T>
+void copy_host_to_device_async(T* host_ptr, T* device_ptr, std::size_t n,
+                               cudaStream_t stream) {
+    auto status = cudaMemcpyAsync(device_ptr, host_ptr, n * sizeof(T),
+                                  cudaMemcpyHostToDevice, stream);
+    cuda_check_status(status);
+}
+
+/**
  * @brief Copy device memory to host memory
  *
  * @tparam T
@@ -115,6 +132,22 @@ template <typename T>
 void copy_device_to_host(T* device_ptr, T* host_ptr, std::size_t n) {
     auto status =
         cudaMemcpy(host_ptr, device_ptr, n * sizeof(T), cudaMemcpyDeviceToHost);
+    cuda_check_status(status);
+}
+
+/**
+ * @brief Copy device memory to host memory
+ *
+ * @tparam T
+ * @param device_ptr Device pointer
+ * @param host_ptr Host pointer
+ * @param n Number of memory blocks to copy
+ */
+template <typename T>
+void copy_device_to_host_async(T* device_ptr, T* host_ptr, std::size_t n,
+                               cudaStream_t stream) {
+    auto status = cudaMemcpyAsync(host_ptr, device_ptr, n * sizeof(T),
+                                  cudaMemcpyDeviceToHost, stream);
     cuda_check_status(status);
 }
 
