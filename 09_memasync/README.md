@@ -1,7 +1,6 @@
-# MEM
+# MEMASYNC
 
-Benchmark page-locked (pinned) memory against pageable memory.
-
+Use single CUDA stream for asyncronous memory copy.
 ## CUDA Concepts
 
 ### CUDA Streams
