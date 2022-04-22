@@ -11,7 +11,7 @@ Playground for experimentation with CUDA C++. Most of the code in this repositor
 * `05_dot`: [shared memory](05_dot/README.md#shared-memory), [thread synchronization](05_dot/README.md#thread-synchronization)
 * `06_raytracer`: [constant memory](06_raytracer#constant-memory), [warps](06_raytracer#warps), [host/device functions](06_raytracer#hostdevice-functions), [GPU timing and events](06_raytracer#gpu-timing)
 * `07_hist`: [atomic operations](07_hist#atomic-operations), [set device memory](07_hist#set-device-memory)
-* `08_mem`: [atomic operations](08_mem#page-locked-memory)
+* `08_mem`: [page-locked memory](08_mem#page-locked-memory)
 * `09_memasync`: [CUDA streams](09_memasync#cuda-streams), [asyncronous memory copy](09_memasync#asyncronous-memory-copy)
 
 ### Timings
