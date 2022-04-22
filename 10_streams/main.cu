@@ -80,11 +80,11 @@ int main() {
 
         // Copy using stream0
         copy_host_to_device_async(a_host + i, a_dev_0 + i, n, stream0);
-        copy_host_to_device_async(a_host + i, a_dev_0 + i, n, stream0);
+        copy_host_to_device_async(b_host + i, b_dev_0 + i, n, stream0);
 
         // Copy using stream1
         copy_host_to_device_async(a_host + i + n, a_dev_1 + i, n, stream1);
-        copy_host_to_device_async(a_host + i + n, a_dev_1 + i, n, stream1);
+        copy_host_to_device_async(b_host + i + n, b_dev_1 + i, n, stream1);
 
         // Start computation as soon as stream is ready
         // (as soon as the previous operation on the same stream is complete)
