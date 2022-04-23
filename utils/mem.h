@@ -159,12 +159,12 @@ void copy_device_to_host_async(T* device_ptr, T* host_ptr, std::size_t n,
  * @return T* Pointer to allocated memory
  */
 template <typename T> T* cualloc_host(std::size_t n) {
-    void* device_ptr{nullptr}; // Declare void pointer
+    void* host_ptr{nullptr}; // Declare void pointer
     auto status = cudaHostAlloc(
-        &device_ptr, n * sizeof(T),
+        &host_ptr, n * sizeof(T),
         cudaHostAllocDefault); // Try page-locked memory allocation
     cuda_check_status(status); // Check allocation
-    return (T*)device_ptr;     // Return pointer of type T*
+    return (T*)host_ptr;       // Return pointer of type T*
 }
 
 /**
@@ -177,6 +177,43 @@ template <typename T> void free_cuhost(T* host_ptr) {
     auto status = cudaFreeHost(host_ptr); // Free page-locked memory
     cuda_check_status(status);
     host_ptr = nullptr;
+}
+
+/**
+ * @brief Allocate page-locked mapped memory on the host
+ *
+ * @tparam T
+ * @param n Number of memory blocks to allocate
+ * @param value Initization value for memory blocks
+ * @return T* Pointer to allocated memory
+ */
+template <typename T> T* malloc_mapped(std::size_t n, T value = T()) {
+    void* host_ptr{nullptr}; // Declare void pointer
+    auto status = cudaHostAlloc(
+        &host_ptr, n * sizeof(T),
+        cudaHostAllocMapped);  // Try page-locked mapped memory allocation
+    cuda_check_status(status); // Check allocation
+    std::fill((T*)host_ptr, (T*)host_ptr + n, value); // Fill memorys
+    return (T*)host_ptr; // Return pointer of type T*
+}
+
+/**
+ * @brief Allocate read-only page-locked mapped memory on the host
+ *
+ * @tparam T
+ * @param n Number of memory blocks to allocate
+ * @param value Initization value for memory blocks
+ * @return T* Pointer to allocated memory
+ */
+template <typename T> T* malloc_mapped_readonly(std::size_t n, T value = T()) {
+    void* host_ptr{nullptr}; // Declare void pointer
+    auto status = cudaHostAlloc(
+        &host_ptr, n * sizeof(T),
+        cudaHostAllocWriteCombined |
+            cudaHostAllocMapped); // Try page-locked mapped memory allocation
+    cuda_check_status(status);    // Check allocation
+    std::fill((T*)host_ptr, (T*)host_ptr + n, value); // Fill memorys
+    return (T*)host_ptr; // Return pointer of type T*
 }
 
 #endif // MEM_H
